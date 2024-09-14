@@ -1,15 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="stylesheet" href="/src/style.css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
-  </head>
-  <body>
-    <div id="app">
-      <h1>TypeScript Sandbox</h1>
+    <title>Proyecto 6 - Imports</title>
+</head>
+<body>
+<div id="app">
+    <div><h1><span id="mensajeComentarios"></span></h1></div><br>
+    <div id="cartas" class="cartas">
+        <img id="imgCarta" class="cartaRedondeada" src="https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg">
     </div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+    <div><span id="restantes"></span>/40</div>
+    <div id>
+        <h2>Puntos de la ronda: <span id="puntuacion"></span></h2>
+    </div>
+    <div>
+        <h2>Mejor puntuación de la partida: <span id="mejorPuntuacion"></span></h2>
+    </div>
+    <div id="botones">
+        <button id="mePlanto">Me planto</button>
+        <button id="dameCarta">Pide carta</button>
+        <button id="reinicio">Reiniciar</button><br>
+        <button id="queHabriaPasado" disabled>Qué habría pasado</button>
+    </div>
+    <div id="mensaje"><h2><br><span id="mensajeFinal"></span></h2></div>
+    <div id="restantes"></div>
+</div>
+<script type="module" src="/src/main.ts"></script>
+</body>
 </html>
