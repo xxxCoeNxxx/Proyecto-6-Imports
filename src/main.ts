@@ -9,7 +9,7 @@ if (botonMePlanto !== null &&
   botonMePlanto.addEventListener("click", () => {
     funcionBotonMePlanto();
   })
-}
+};
 
 const botonDameCarta = document.getElementById("dameCarta");
 if (
@@ -38,5 +38,7 @@ if (
   botonQueHabriaPasado !== null &&
   botonQueHabriaPasado !== undefined &&
   botonQueHabriaPasado instanceof HTMLButtonElement){
+    botonQueHabriaPasado.addEventListener("click", () => {
     funcQueHabriaPasado();
-  }
+  })
+};

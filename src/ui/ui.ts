@@ -1,3 +1,8 @@
+import { obtenerNumeroAleatorio, obtenerNumeroCarta, cambiarContador, actualizarContTotal, estadoJuego, obtenerPuntosCarta, 
+  sumarPuntos, actualizarPuntuacion, reiniciarContadores } from "../motor/motor";
+
+import { obtenerUrlCarta, cartaBack} from "../modelo/modelo";
+
 export const pintarCarta = (urlCarta: string) => {
     const elementoImagen = document.getElementById("imgCarta");
     if (
@@ -77,11 +82,6 @@ export const pintarComentarios = (puntosSumados: number) => {
     }
 };
 
-import { obtenerNumeroAleatorio, obtenerNumeroCarta, cambiarContador, actualizarContTotal, estadoJuego, obtenerPuntosCarta, 
-    sumarPuntos, actualizarPuntuacion, reiniciarContadores } from "../motor/motor";
-
-import { obtenerUrlCarta, cartaBack} from "../modelo/modelo";
-
 export const dameCarta = () => {
     const numeroAleatorio = obtenerNumeroAleatorio();
     const carta = obtenerNumeroCarta(numeroAleatorio);
@@ -102,13 +102,13 @@ export const dameCarta = () => {
       if (botonDameCarta !== null && 
         botonDameCarta !== undefined && 
         botonDameCarta instanceof HTMLButtonElement) {
-          bloquearBoton(botonDameCarta, true);
+          botonDameCarta.disabled = true;
         }
       if (
         botonMePlanto !== null && 
         botonMePlanto !== undefined && 
         botonMePlanto instanceof HTMLButtonElement) {
-          bloquearBoton(botonMePlanto, true);
+          botonMePlanto.disabled = true;
       }
   }
     
@@ -141,17 +141,18 @@ export const reinicio = () => {
     if (botonDameCarta !== null && 
       botonDameCarta !== undefined && 
       botonDameCarta instanceof HTMLButtonElement) {
-      bloquearBoton(botonDameCarta, false);
+      botonDameCarta.disabled = false;
+
     }
     if (botonMePlanto !== null && 
       botonMePlanto !== undefined && 
       botonMePlanto instanceof HTMLButtonElement) {
-      bloquearBoton(botonMePlanto, false);
+      botonMePlanto.disabled = false;
     }
     if (botonQueHabriaPasado !== null && 
       botonQueHabriaPasado !== undefined && 
       botonQueHabriaPasado instanceof HTMLButtonElement) {
-      bloquearBoton(botonQueHabriaPasado, true);
+      botonQueHabriaPasado.disabled = true;
     }
    };
 /* 
@@ -201,18 +202,18 @@ const comprobarBotonMePlanto = () => {
         botonMePlanto instanceof HTMLButtonElement
       ) {
         botonMePlanto.addEventListener("click", () => {
-          bloquearBoton(botonMePlanto, true);
+          botonMePlanto.disabled = true;
           if (
           botonDameCarta !== null &&
           botonDameCarta !== undefined &&
           botonDameCarta instanceof HTMLButtonElement) {
-            bloquearBoton(botonDameCarta, true);
+            botonDameCarta.disabled = true;
           }
           if (
             botonQueHabriaPasado !== null &&
             botonQueHabriaPasado !== undefined &&
             botonQueHabriaPasado instanceof HTMLButtonElement) {
-              bloquearBoton(botonQueHabriaPasado, false);
+              botonQueHabriaPasado.disabled = false;
             }
         }
     )}
@@ -230,15 +231,25 @@ export const funcionBotonMePlanto = () => {
 }
 
 const botonQueHabriaPasado = document.getElementById("queHabriaPasado");
+const comprobarBotonQueHabriaPasado = () => {
+  if (
+    botonQueHabriaPasado !== null &&
+    botonQueHabriaPasado !== undefined &&
+    botonQueHabriaPasado instanceof HTMLButtonElement) {
+      botonQueHabriaPasado.addEventListener("click", () => {
+        funcQueHabriaPasado();
+      });
+  }
+};
 
 export const funcQueHabriaPasado = () => {
+  comprobarBotonQueHabriaPasado();
   const numeroAleatorio = obtenerNumeroAleatorio();
-      const carta = obtenerNumeroCarta(numeroAleatorio);
-      cambiarContador(estadoJuego, carta.toString());
-      actualizarContTotal(estadoJuego)
-      const urlCarta = obtenerUrlCarta(carta);
-      pintarCarta(urlCarta);
-      /* bloquearBoton(botonQueHabriaPasado, true); */
+  const carta = obtenerNumeroCarta(numeroAleatorio);
+  cambiarContador(estadoJuego, carta.toString());
+  actualizarContTotal(estadoJuego)
+  const urlCarta = obtenerUrlCarta(carta);
+  pintarCarta(urlCarta);
 };
 
   
