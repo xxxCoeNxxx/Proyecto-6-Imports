@@ -1,16 +1,16 @@
 import { obtenerNumeroAleatorio, obtenerNumeroCarta, cambiarContador, actualizarContTotal, estadoJuego, obtenerPuntosCarta, 
-  sumarPuntos, actualizarPuntuacion, reiniciarContadores } from "../motor/motor";
+        sumarPuntos, actualizarPuntuacion, reiniciarContadores } from "../motor/motor";
 
 import { obtenerUrlCarta, cartaBack} from "../modelo/modelo";
 
-export const pintarCarta = (urlCarta: string) => {
-    const elementoImagen = document.getElementById("imgCarta");
-    if (
-        elementoImagen !== null &&
-        elementoImagen !== undefined &&
-        elementoImagen instanceof HTMLImageElement) {
-            elementoImagen.src = urlCarta;
-    }
+const pintarCarta = (urlCarta: string) => {
+const elementoImagen = document.getElementById("imgCarta");
+  if (
+      elementoImagen !== null &&
+      elementoImagen !== undefined &&
+      elementoImagen instanceof HTMLImageElement) {
+          elementoImagen.src = urlCarta;
+  }
 };
 
 const pintarPuntuacion = (puntuacion: number) => {
@@ -43,11 +43,7 @@ const pintarMensajeFinal = (mensajeFinal: string) => {
     }
 };
 
-export const bloquearBoton = (boton: HTMLButtonElement, elegirToF: boolean): void => {
-    boton.disabled = elegirToF;
-};
-
-export const pintarRestantes = (mensajeRestantes: string) => {
+const pintarRestantes = (mensajeRestantes: string) => {
     const elementoMensajeRestantes = document.getElementById("restantes")
     if (
         elementoMensajeRestantes !== null &&
@@ -57,69 +53,68 @@ export const pintarRestantes = (mensajeRestantes: string) => {
     }
 };
 
-export const pintarComentarios = (puntosSumados: number) => {
-    const elementoComentarios = document.getElementById("mensajeComentarios")
-
-    if (
-        elementoComentarios !== null &&
-        elementoComentarios !== undefined &&
-        elementoComentarios instanceof HTMLSpanElement){
-            if (puntosSumados === 0) {
-                elementoComentarios.textContent = "";
-            }
-            if (puntosSumados <= 4) {
-                elementoComentarios.textContent = "Has sido muy conservador";
-            }
-            if (puntosSumados > 4 && puntosSumados < 6) {
-                elementoComentarios.textContent = "Te ha entrado el canguelo eh?";
-            }
-            if (puntosSumados >= 6 && puntosSumados <= 7){
-                elementoComentarios.textContent = "Casi casi..."
-            }
-            if (puntosSumados	=== 7.5) {
-                elementoComentarios.textContent = "Lo has clavado! Enhorabuena!"
-            }
-    }
+const pintarComentarios = (puntosSumados: number) => {
+  const elementoComentarios = document.getElementById("mensajeComentarios")
+  if (
+      elementoComentarios !== null &&
+      elementoComentarios !== undefined &&
+      elementoComentarios instanceof HTMLSpanElement){
+        if (puntosSumados === 0) {
+            elementoComentarios.textContent = "";
+        }
+        if (puntosSumados <= 4) {
+            elementoComentarios.textContent = "Has sido muy conservador";
+        }
+        if (puntosSumados > 4 && puntosSumados < 6) {
+            elementoComentarios.textContent = "Te ha entrado el canguelo eh?";
+        }
+        if (puntosSumados >= 6 && puntosSumados <= 7){
+            elementoComentarios.textContent = "Casi casi..."
+        }
+        if (puntosSumados	=== 7.5) {
+            elementoComentarios.textContent = "Lo has clavado! Enhorabuena!"
+        }
+  }
 };
 
 export const dameCarta = () => {
-    const numeroAleatorio = obtenerNumeroAleatorio();
-    const carta = obtenerNumeroCarta(numeroAleatorio);
-    cambiarContador(estadoJuego, carta.toString());
-    actualizarContTotal(estadoJuego)
-    const urlCarta = obtenerUrlCarta(carta);
-    pintarCarta(urlCarta);
-    const puntosCarta = obtenerPuntosCarta(carta);
-    estadoJuego.puntosSumados = sumarPuntos(estadoJuego, puntosCarta);
-    actualizarPuntuacion(estadoJuego, estadoJuego.puntosSumados);
-    pintarPuntuacion(estadoJuego.puntosTotales);
-    pintarRestantes(estadoJuego.contTotal.toString());
-    comprobarPartida();
-  };
+  const numeroAleatorio = obtenerNumeroAleatorio();
+  const carta = obtenerNumeroCarta(numeroAleatorio);
+  cambiarContador(estadoJuego, carta.toString());
+  actualizarContTotal(estadoJuego)
+  const urlCarta = obtenerUrlCarta(carta);
+  pintarCarta(urlCarta);
+  const puntosCarta = obtenerPuntosCarta(carta);
+  estadoJuego.puntosSumados = sumarPuntos(estadoJuego, puntosCarta);
+  actualizarPuntuacion(estadoJuego, estadoJuego.puntosSumados);
+  pintarPuntuacion(estadoJuego.puntosTotales);
+  pintarRestantes(estadoJuego.contTotal.toString());
+  comprobarPartida();
+};
 
-  export const comprobarPartida = () => {
-    if (estadoJuego.puntosTotales === 7.5 || estadoJuego.puntosTotales > 7.5) {
-      if (botonDameCarta !== null && 
-        botonDameCarta !== undefined && 
-        botonDameCarta instanceof HTMLButtonElement) {
-          botonDameCarta.disabled = true;
-        }
-      if (
-        botonMePlanto !== null && 
-        botonMePlanto !== undefined && 
-        botonMePlanto instanceof HTMLButtonElement) {
-          botonMePlanto.disabled = true;
+const comprobarPartida = () => {
+  if (estadoJuego.puntosTotales === 7.5 || estadoJuego.puntosTotales > 7.5) {
+    if (botonDameCarta !== null && 
+      botonDameCarta !== undefined && 
+      botonDameCarta instanceof HTMLButtonElement) {
+        botonDameCarta.disabled = true;
       }
+    if (
+      botonMePlanto !== null && 
+      botonMePlanto !== undefined && 
+      botonMePlanto instanceof HTMLButtonElement) {
+        botonMePlanto.disabled = true;
+    }
   }
-    
-    if (estadoJuego.puntosTotales === 7.5) {
-      pintarMejorPuntuacion(7.5);
-      pintarMensajeFinal("Lo has clavado! Enhorabuena!");
-    }
-    if (estadoJuego.puntosTotales > 7.5) {
-      pintarMensajeFinal("Has perdido... Prueba otra vez!");
-    }
-  };
+  
+  if (estadoJuego.puntosTotales === 7.5) {
+    pintarMejorPuntuacion(7.5);
+    pintarMensajeFinal("Lo has clavado! Enhorabuena!");
+  }
+  if (estadoJuego.puntosTotales > 7.5) {
+    pintarMensajeFinal("Has perdido... Prueba otra vez!");
+  }
+};
 
 const botonDameCarta = document.getElementById("dameCarta");
 
@@ -155,45 +150,6 @@ export const reinicio = () => {
       botonQueHabriaPasado.disabled = true;
     }
    };
-/* 
-const botonReinicio = document.getElementById("reinicio");
-if (
-  botonReinicio !== null &&
-  botonReinicio !== undefined &&
-  botonReinicio instanceof HTMLButtonElement
-) {
-  botonReinicio.addEventListener("click", () => {
-    pintarCarta(cartaBack);
-    estadoJuego.puntosTotales = 0;
-    actualizarPuntuacion(estadoJuego, 0);
-    pintarPuntuacion(0);
-    pintarMejorPuntuacion(0);
-    pintarMensajeFinal("");
-    pintarRestantes("40");
-    reiniciarContadores(estadoJuego);
-
-    const elementoComentarios = document.getElementById("mensajeComentarios");
-    if (elementoComentarios !== null && elementoComentarios instanceof HTMLSpanElement) {
-        elementoComentarios.textContent = "";  // Limpia el mensaje de comentarios
-    }
-
-    if (botonDameCarta !== null && 
-      botonDameCarta !== undefined && 
-      botonDameCarta instanceof HTMLButtonElement) {
-      bloquearBoton(botonDameCarta, false);
-    }
-    if (botonMePlanto !== null && 
-      botonMePlanto !== undefined && 
-      botonMePlanto instanceof HTMLButtonElement) {
-      bloquearBoton(botonMePlanto, false);
-    }
-    if (botonQueHabriaPasado !== null && 
-      botonQueHabriaPasado !== undefined && 
-      botonQueHabriaPasado instanceof HTMLButtonElement) {
-      bloquearBoton(botonQueHabriaPasado, true);
-    }
-   })
-}; */
 
 const comprobarBotonMePlanto = () => {
     if (
@@ -228,7 +184,7 @@ export const funcionBotonMePlanto = () => {
   pintarComentarios(estadoJuego.puntosSumados);
   estadoJuego.puntosSumados = 0;
   comprobarPartida();
-}
+};
 
 const botonQueHabriaPasado = document.getElementById("queHabriaPasado");
 const comprobarBotonQueHabriaPasado = () => {
@@ -251,5 +207,3 @@ export const funcQueHabriaPasado = () => {
   const urlCarta = obtenerUrlCarta(carta);
   pintarCarta(urlCarta);
 };
-
-  

@@ -15,7 +15,6 @@ export interface EstadoJuego {
     contTotal: number;
 };
 
-
 export const obtenerNumeroAleatorio = () => {
     return Math.floor(Math.random() * 10) + 1;
 };
@@ -40,7 +39,7 @@ export const sumarPuntos = (estado: EstadoJuego, puntos: number) => {
 
 export const actualizarPuntuacion = (estado: EstadoJuego, puntosActuales: number) => {
     if (puntosActuales > estado.puntosTotales) {
-        estado.puntosTotales = puntosActuales;
+    estado.puntosTotales = puntosActuales;
     }
 };
 
