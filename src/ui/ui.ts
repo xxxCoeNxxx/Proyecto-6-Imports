@@ -8,7 +8,7 @@ export const pintarCarta = (urlCarta: string) => {
     }
 };
 
-export const pintarPuntuacion = (puntuacion: number) => {
+const pintarPuntuacion = (puntuacion: number) => {
     const elementoPuntuacion = document.getElementById("puntuacion");
     if (
         elementoPuntuacion !== null &&
@@ -18,7 +18,7 @@ export const pintarPuntuacion = (puntuacion: number) => {
     }
 };
 
-export const pintarMejorPuntuacion = (mejorPuntuacion: number) => {
+const pintarMejorPuntuacion = (mejorPuntuacion: number) => {
     const elementoMejorPuntuacion = document.getElementById("mejorPuntuacion")
     if (
         elementoMejorPuntuacion !== null &&
@@ -28,7 +28,7 @@ export const pintarMejorPuntuacion = (mejorPuntuacion: number) => {
     }
 };
 
-export const pintarMensajeFinal = (mensajeFinal: string) => {
+const pintarMensajeFinal = (mensajeFinal: string) => {
     const elementoMensajeFinal = document.getElementById("mensajeFinal")
     if (
         elementoMensajeFinal !== null &&
@@ -76,3 +76,169 @@ export const pintarComentarios = (puntosSumados: number) => {
             }
     }
 };
+
+import { obtenerNumeroAleatorio, obtenerNumeroCarta, cambiarContador, actualizarContTotal, estadoJuego, obtenerPuntosCarta, 
+    sumarPuntos, actualizarPuntuacion, reiniciarContadores } from "../motor/motor";
+
+import { obtenerUrlCarta, cartaBack} from "../modelo/modelo";
+
+export const dameCarta = () => {
+    const numeroAleatorio = obtenerNumeroAleatorio();
+    const carta = obtenerNumeroCarta(numeroAleatorio);
+    cambiarContador(estadoJuego, carta.toString());
+    actualizarContTotal(estadoJuego)
+    const urlCarta = obtenerUrlCarta(carta);
+    pintarCarta(urlCarta);
+    const puntosCarta = obtenerPuntosCarta(carta);
+    estadoJuego.puntosSumados = sumarPuntos(estadoJuego, puntosCarta);
+    actualizarPuntuacion(estadoJuego, estadoJuego.puntosSumados);
+    pintarPuntuacion(estadoJuego.puntosTotales);
+    pintarRestantes(estadoJuego.contTotal.toString());
+    comprobarPartida();
+  };
+
+  export const comprobarPartida = () => {
+    if (estadoJuego.puntosTotales === 7.5 || estadoJuego.puntosTotales > 7.5) {
+      if (botonDameCarta !== null && 
+        botonDameCarta !== undefined && 
+        botonDameCarta instanceof HTMLButtonElement) {
+          bloquearBoton(botonDameCarta, true);
+        }
+      if (
+        botonMePlanto !== null && 
+        botonMePlanto !== undefined && 
+        botonMePlanto instanceof HTMLButtonElement) {
+          bloquearBoton(botonMePlanto, true);
+      }
+  }
+    
+    if (estadoJuego.puntosTotales === 7.5) {
+      pintarMejorPuntuacion(7.5);
+      pintarMensajeFinal("Lo has clavado! Enhorabuena!");
+    }
+    if (estadoJuego.puntosTotales > 7.5) {
+      pintarMensajeFinal("Has perdido... Prueba otra vez!");
+    }
+  };
+
+const botonDameCarta = document.getElementById("dameCarta");
+
+export const reinicio = () => {
+  pintarCarta(cartaBack);
+    estadoJuego.puntosTotales = 0;
+    actualizarPuntuacion(estadoJuego, 0);
+    pintarPuntuacion(0);
+    pintarMejorPuntuacion(0);
+    pintarMensajeFinal("");
+    pintarRestantes("40");
+    reiniciarContadores(estadoJuego);
+
+    const elementoComentarios = document.getElementById("mensajeComentarios");
+    if (elementoComentarios !== null && elementoComentarios instanceof HTMLSpanElement) {
+        elementoComentarios.textContent = "";  // Limpia el mensaje de comentarios
+    }
+
+    if (botonDameCarta !== null && 
+      botonDameCarta !== undefined && 
+      botonDameCarta instanceof HTMLButtonElement) {
+      bloquearBoton(botonDameCarta, false);
+    }
+    if (botonMePlanto !== null && 
+      botonMePlanto !== undefined && 
+      botonMePlanto instanceof HTMLButtonElement) {
+      bloquearBoton(botonMePlanto, false);
+    }
+    if (botonQueHabriaPasado !== null && 
+      botonQueHabriaPasado !== undefined && 
+      botonQueHabriaPasado instanceof HTMLButtonElement) {
+      bloquearBoton(botonQueHabriaPasado, true);
+    }
+   };
+/* 
+const botonReinicio = document.getElementById("reinicio");
+if (
+  botonReinicio !== null &&
+  botonReinicio !== undefined &&
+  botonReinicio instanceof HTMLButtonElement
+) {
+  botonReinicio.addEventListener("click", () => {
+    pintarCarta(cartaBack);
+    estadoJuego.puntosTotales = 0;
+    actualizarPuntuacion(estadoJuego, 0);
+    pintarPuntuacion(0);
+    pintarMejorPuntuacion(0);
+    pintarMensajeFinal("");
+    pintarRestantes("40");
+    reiniciarContadores(estadoJuego);
+
+    const elementoComentarios = document.getElementById("mensajeComentarios");
+    if (elementoComentarios !== null && elementoComentarios instanceof HTMLSpanElement) {
+        elementoComentarios.textContent = "";  // Limpia el mensaje de comentarios
+    }
+
+    if (botonDameCarta !== null && 
+      botonDameCarta !== undefined && 
+      botonDameCarta instanceof HTMLButtonElement) {
+      bloquearBoton(botonDameCarta, false);
+    }
+    if (botonMePlanto !== null && 
+      botonMePlanto !== undefined && 
+      botonMePlanto instanceof HTMLButtonElement) {
+      bloquearBoton(botonMePlanto, false);
+    }
+    if (botonQueHabriaPasado !== null && 
+      botonQueHabriaPasado !== undefined && 
+      botonQueHabriaPasado instanceof HTMLButtonElement) {
+      bloquearBoton(botonQueHabriaPasado, true);
+    }
+   })
+}; */
+
+const comprobarBotonMePlanto = () => {
+    if (
+        botonMePlanto !== null &&
+        botonMePlanto !== undefined &&
+        botonMePlanto instanceof HTMLButtonElement
+      ) {
+        botonMePlanto.addEventListener("click", () => {
+          bloquearBoton(botonMePlanto, true);
+          if (
+          botonDameCarta !== null &&
+          botonDameCarta !== undefined &&
+          botonDameCarta instanceof HTMLButtonElement) {
+            bloquearBoton(botonDameCarta, true);
+          }
+          if (
+            botonQueHabriaPasado !== null &&
+            botonQueHabriaPasado !== undefined &&
+            botonQueHabriaPasado instanceof HTMLButtonElement) {
+              bloquearBoton(botonQueHabriaPasado, false);
+            }
+        }
+    )}
+};
+
+const botonMePlanto = document.getElementById("mePlanto");
+export const funcionBotonMePlanto = () => {
+  comprobarBotonMePlanto();
+  pintarMejorPuntuacion(estadoJuego.puntosTotales);
+  actualizarPuntuacion(estadoJuego, 0);
+  pintarPuntuacion(0);
+  pintarComentarios(estadoJuego.puntosSumados);
+  estadoJuego.puntosSumados = 0;
+  comprobarPartida();
+}
+
+const botonQueHabriaPasado = document.getElementById("queHabriaPasado");
+
+export const funcQueHabriaPasado = () => {
+  const numeroAleatorio = obtenerNumeroAleatorio();
+      const carta = obtenerNumeroCarta(numeroAleatorio);
+      cambiarContador(estadoJuego, carta.toString());
+      actualizarContTotal(estadoJuego)
+      const urlCarta = obtenerUrlCarta(carta);
+      pintarCarta(urlCarta);
+      /* bloquearBoton(botonQueHabriaPasado, true); */
+};
+
+  

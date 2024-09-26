@@ -15,6 +15,42 @@ export interface EstadoJuego {
     contTotal: number;
 };
 
+
+export const obtenerNumeroAleatorio = () => {
+    return Math.floor(Math.random() * 10) + 1;
+};
+
+export const obtenerNumeroCarta = (numeroAleatorio: number) => {
+    if (numeroAleatorio > 7) {
+        return numeroAleatorio + 2;
+    }
+    return numeroAleatorio;
+};
+
+export const obtenerPuntosCarta = (carta: number) => {
+    if (carta > 7) {
+        return 0.5;
+    }
+    return carta;
+};
+
+export const sumarPuntos = (estado: EstadoJuego, puntos: number) => {
+    return estado.puntosTotales + puntos;
+};
+
+export const actualizarPuntuacion = (estado: EstadoJuego, puntosActuales: number) => {
+    if (puntosActuales > estado.puntosTotales) {
+        estado.puntosTotales = puntosActuales;
+    }
+};
+
+
+export const actualizarContTotal = (estado: EstadoJuego) => {
+    estado.contTotal = estado.contAs + estado.contDos + estado.contTres + estado.contCuatro + estado.contCinco 
+    + estado.contSeis + estado.contSiete + estado.contSota + estado.contCaballo + estado.contRey;
+};
+
+// BORRAR SI DA FALLOS EN testing
 export const CONTMAX: number = 4;
 export const CONTTOTALMAX: number = 40;
 
@@ -34,44 +70,11 @@ export let estadoJuego: EstadoJuego = {
     contTotal: CONTTOTALMAX
 };
 
-export const obtenerNumeroAleatorio = () => {
-    return Math.floor(Math.random() * 10) + 1;
-};
-
-export const obtenerNumeroCarta = (numeroAleatorio: number) => {
-    if (numeroAleatorio > 7) {
-      return numeroAleatorio + 2;
-    }
-    return numeroAleatorio;
-};
-  
-export const obtenerPuntosCarta = (carta: number) => {
-    if (carta > 7) {
-        return 0.5;
-    }
-    return carta;
-};
-
-export const sumarPuntos = (estado: EstadoJuego, puntos: number) => {
-    return estado.puntosTotales + puntos;
-};
-
-export const actualizarPuntuacion = (estado: EstadoJuego, puntosActuales: number) => {
-    if (puntosActuales > estado.puntosTotales) {
-        estado.puntosTotales = puntosActuales;
-    }
-};
-
 export const reiniciarContadores = (estado: EstadoJuego) => {
     estado.contAs = estado.contDos = estado.contTres = estado.contCuatro = estado.contCinco = estado.contSeis 
-        = estado.contSiete = estado.contSota = estado.contCaballo = estado.contRey = CONTMAX;
+    = estado.contSiete = estado.contSota = estado.contCaballo = estado.contRey = CONTMAX;
     estado.contTotal = CONTTOTALMAX;
 }; 
-
-export const actualizarContTotal = (estado: EstadoJuego) => {
-    estado.contTotal = estado.contAs + estado.contDos + estado.contTres + estado.contCuatro + estado.contCinco 
-        + estado.contSeis + estado.contSiete + estado.contSota + estado.contCaballo + estado.contRey;
-};
 
 export const cambiarContador = (estado: EstadoJuego, nombreCont: string) => {
     switch(nombreCont) {
@@ -110,3 +113,4 @@ export const cambiarContador = (estado: EstadoJuego, nombreCont: string) => {
             break;
     }
 };
+
